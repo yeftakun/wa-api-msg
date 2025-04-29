@@ -9,5 +9,5 @@ npx npm ...
 curl:
 
 ```
-curl -X POST http://localhost:3000/send-message -H "Content-Type: application/json" -d "{\"number\":\"628xxx\",\"message\":\"Halo dari curl!\"}"
+curl -X POST http://localhost:3000/send-message -H "Content-Type: application/json" -H "x-api-key: abcdXD" -d "{\"number\":\"628xxx\",\"message\":\"Halo dari curl!\"}"
 ```
