@@ -1,6 +1,6 @@
 require('dotenv').config(); // Tambahkan ini paling atas
 
-const { Client, LocalAuth } = require('whatsapp-web.js');
+const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const readline = require('readline');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -20,6 +20,8 @@ client.on('qr', (qr) => {
 client.on('ready', async () => {
     console.log('Bot sudah terhubung!');
 });
+
+const IMG_HOST = process.env.IMG_HOST; // Ambil host dari .env
 
 // Middleware cek API Key
 app.use((req, res, next) => {
@@ -46,6 +48,49 @@ app.post('/send-message', async (req, res) => {
         }
     } else {
         res.status(404).json({ status: 'error', message: `${number} tidak ada di WhatsApp.` });
+    }
+});
+
+// app.post('/send-image', async (req, res) => {
+//     const { number } = req.body;
+//     const targetNumber = `${number}@c.us`;
+//     const imageUrl = 'http://localhost:3001/img/attendance_pic/1747573811240_55.jpg';
+//     const caption = 'contoh foto dengan caption';
+
+//     try {
+//         const isRegistered = await client.isRegisteredUser(targetNumber);
+//         if (!isRegistered) {
+//             return res.status(404).json({ status: 'error', message: `${number} tidak ada di WhatsApp.` });
+//         }
+
+//         const media = await MessageMedia.fromUrl(imageUrl);
+//         await client.sendMessage(targetNumber, media, { caption });
+//         res.status(200).json({ status: 'success', message: `Gambar terkirim ke ${number}` });
+//     } catch (error) {
+//         res.status(500).json({ status: 'error', message: `Gagal mengirim gambar ke ${number}` });
+//     }
+// });
+
+app.post('/send-image-url', async (req, res) => {
+    const { number, filename, caption } = req.body;
+    if (!number || !filename) {
+        return res.status(400).json({ status: 'error', message: 'number dan filename wajib diisi' });
+    }
+    const targetNumber = `${number}@c.us`;
+    const imageUrl = `${IMG_HOST}/img/attendance_pic/${filename}`;
+    const imageCaption = caption || 'contoh foto dengan caption';
+
+    try {
+        const isRegistered = await client.isRegisteredUser(targetNumber);
+        if (!isRegistered) {
+            return res.status(404).json({ status: 'error', message: `${number} tidak ada di WhatsApp.` });
+        }
+
+        const media = await MessageMedia.fromUrl(imageUrl);
+        await client.sendMessage(targetNumber, media, { caption: imageCaption });
+        res.status(200).json({ status: 'success', message: `Gambar terkirim ke ${number}` });
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: `Gagal mengirim gambar ke ${number}` });
     }
 });
 
