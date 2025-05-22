@@ -1,6 +1,6 @@
 # WhatsApp API Message Sender
 
-Proyek ini adalah API sederhana berbasis Node.js untuk mengirim pesan dan gambar ke WhatsApp menggunakan [whatsapp-web.js](https://github.com/pedroslopez/whatsapp-web.js). API ini cocok untuk integrasi sistem absensi, notifikasi, atau kebutuhan pengiriman pesan WhatsApp otomatis lainnya.
+Proyek ini adalah API sederhana berbasis Node.js untuk mengirim pesan dan gambar ke WhatsApp menggunakan [whatsapp-web.js](https://github.com/pedroslopez/whatsapp-web.js). API ini dibuat untuk integrasi sistem [absensi](https://github.com/yeftakun/absensi.git) dan dapat digunakan untuk kebutuhan pengiriman pesan WhatsApp otomatis lainnya.
 
 ## Fitur
 
@@ -36,7 +36,7 @@ Proyek ini adalah API sederhana berbasis Node.js untuk mengirim pesan dan gambar
 node index.js
 ```
 
-Saat pertama kali dijalankan, Anda akan diminta untuk scan QR code di terminal menggunakan WhatsApp.
+Saat pertama kali dijalankan, Anda akan diminta untuk scan QR code di terminal menggunakan WhatsApp. Ini akan menghubungkan dengan akun WhatsApp anda.
 
 ## Endpoint API
 
@@ -71,7 +71,3 @@ Saat pertama kali dijalankan, Anda akan diminta untuk scan QR code di terminal m
 
 - Nomor WhatsApp harus menggunakan format internasional tanpa tanda `+`, contoh: `6281234567890`.
 - Pastikan server gambar (`IMG_HOST`) dapat diakses dari server ini.
-
-## Lisensi
-
-MIT
